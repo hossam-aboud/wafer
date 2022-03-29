@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "412756751593",
+    "project_id": "wafer-e5e60",
+    "storage_bucket": "wafer-e5e60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412756751593:android:0cd641e506a73916d0ec78",
+        "android_client_info": {
+          "package_name": "com.hindir.coupons.coupons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412756751593-7cm25v38cujauqp9p802tu2evnb9aegd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF95tfczj2tEIYTfX-2YVvVSa-3EHwTeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412756751593-7cm25v38cujauqp9p802tu2evnb9aegd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "412756751593-7vimvu0p942mqhu5rsrmnietvmlj95cp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hindir.coupons.coupons",
+                "app_store_id": "1588650889"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
