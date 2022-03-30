@@ -151,7 +151,6 @@ Future<bool> onWillPop(BuildContext context) async {
 
   if (currentBackPressTime == null ||
       now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
-    log('hossam');
     currentBackPressTime = now;
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
     return Future.value(false);
