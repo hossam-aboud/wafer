@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:coupons/controllers/app_controller.dart';
 import 'package:coupons/controllers/storage_controller.dart';
 import 'package:coupons/global/enums.dart';
@@ -177,7 +179,7 @@ class InitDataController extends GetxController {
     }
 
     if(query != null && query.isNotEmpty) {
-      _filteredCoupons = _filteredCoupons.where((coupon) => coupon.title.contains(query)).toList();
+      _filteredCoupons = _filteredCoupons.where((coupon) => coupon.shop.name.contains(query)).toList();
     }
 
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:coupons/models/Coupon.dart';
 
@@ -27,7 +28,8 @@ class Shop {
   String name;
   List<Coupon> coupons;
 
-  factory Shop.fromJson(Map<String, dynamic> json) => Shop(
+  factory Shop.fromJson(Map<String, dynamic> json) {
+    return Shop(
     id: json["id"] ?? 0,
     url: json["url"] ?? null,
     image: json["image"] ?? '',
@@ -35,6 +37,7 @@ class Shop {
     name: json["name"] ?? '',
     coupons: json['coupons'] != null ? List<Coupon>.from(json["coupons"].map((x) => Coupon.fromJson(x))) : [],
   );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id ?? 0,

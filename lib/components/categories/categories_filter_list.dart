@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:coupons/components/animations/fade_animation.dart';
 import 'package:coupons/components/bottom_sheet/CouponFilterBottomSheet.dart';
 import 'package:coupons/components/network/build_image.dart';
@@ -12,8 +14,10 @@ import 'package:get/get.dart';
 class CategoriesFilterList extends StatelessWidget {
 
   final bool displayButtonFilter;
+  final  ScrollController controller;
+  RxInt currentIndx;
 
-  const CategoriesFilterList({Key key, this.displayButtonFilter = false}) : super(key: key);
+   CategoriesFilterList({Key key, this.displayButtonFilter = false, @required this.controller, this.currentIndx}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +47,21 @@ class CategoriesFilterList extends StatelessWidget {
               width: Get.width,
               height: 50.0,
               child: ListView.builder(
+                controller: this.controller,
                 padding: EdgeInsets.only(right: Get.locale.languageCode == 'ar' ? 15.0 : 0, left: Get.locale.languageCode == 'ar' ? 0 : 15.0),
                 scrollDirection: Axis.horizontal,
                 itemCount: initData.categories.length + 1,
                 itemBuilder: (BuildContext context, int index) {
+                  if (currentIndx != null){
+                    controller.selectedCategory = currentIndx as RxInt;
+                  }
+                  log(controller.selectedCategory.toString());
                   if(index == 0) {
-                    return _container(text: 'all'.tr, image: null, id: 0, active: 0 == controller.selectedCategory);
+                    return _container(text: 'all'.tr, image: null, id: 0, active: 0 == controller.selectedCategoryy);
 
                   } else {
                     Category category = initData.categories[index-1];
-                    return _container(text: category.name, image: category.image, id: category.id, active: category.id == controller.selectedCategory);
+                    return _container(text: category.name, image: category.image, id: category.id, active: category.id == controller.selectedCategoryy);
 
                   }
                 },

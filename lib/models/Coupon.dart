@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:coupons/models/shop.dart';
 
 class Coupon {
@@ -71,7 +73,9 @@ class Coupon {
   Shop shop;
 
 
-  factory Coupon.fromJson(Map<String, dynamic> json) => Coupon(
+  factory Coupon.fromJson(Map<String, dynamic> json) {
+    return Coupon(
+
     id: json["id"],
     slug: json["slug"],
     categoryId: json["category_id"],
@@ -105,6 +109,7 @@ class Coupon {
     title: json["title"],
     shop: json["shop"] != null ? Shop.fromJson(json["shop"]) : new Shop(),
   );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,

@@ -15,6 +15,10 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
+  final RxInt currentIndex ;
+
+  const HomeScreen({Key key, this.currentIndex}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -23,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-
+  final ScrollController controller = ScrollController();
   void _onRefreshPage() async{
     Get.find<InitDataController>().initFetchData();
     _refreshController.refreshCompleted();
@@ -118,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   FadeAnimation(
                     delay: 1.5,
-                    child: CategoriesFilterList(),
+                    child: CategoriesFilterList(controller: controller, currentIndx: widget.currentIndex,),
                   ),
 
                   FadeAnimation(
@@ -152,7 +156,7 @@ Future<bool> onWillPop(BuildContext context) async {
   if (currentBackPressTime == null ||
       now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
     currentBackPressTime = now;
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen(currentIndex: RxInt(0),)), (route) => false);
     return Future.value(false);
   }
 

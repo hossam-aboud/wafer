@@ -33,9 +33,12 @@ class DrawerWidget extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Get.back();
-                    Get.find<AppController>().setAppLoadValue = false;
+                    Get
+                        .find<AppController>()
+                        .setAppLoadValue = false;
                     bool isEnglish = Get.locale.languageCode == 'en';
-                    LocalizationService().changeLocale(isEnglish ? 'عربي' : 'English');
+                    LocalizationService().changeLocale(
+                        isEnglish ? 'عربي' : 'English');
                     Get.find<InitDataController>().initFetchData();
                   },
                   child: Text('lang'.tr),
@@ -46,16 +49,41 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              MenuButton(icon: Icons.home_outlined, text: 'home'.tr, navTo: HomeScreen(), url: 'home'),
-              MenuButton(icon: Icons.open_in_new, text: 'deals'.tr, navTo: DealsScreen()),
-              MenuButton(icon: Icons.favorite_border_outlined, text: 'favorites'.tr, navTo: FavoritesScreen()),
-              MenuButton(icon: Icons.volume_down_outlined, text: 'adWithUs'.tr, navTo: ShareYourCoupon()),
-              MenuButton(icon: Icons.star_outline_outlined, text: 'rateUs'.tr, navTo: HomeScreen(), url: 'rate'),
-              MenuButton(icon: Icons.photo_camera_outlined, text: 'instagram'.tr, navTo: HomeScreen(), url: 'instagram'),
-              MenuButton(newIcon: 'T', text: 'twitter'.tr, navTo: HomeScreen(), url: 'twitter'),
-              MenuButton(icon: Icons.send_outlined, text: 'telegram'.tr, url: 'telegram'),
-              MenuButton(icon: Icons.mode_comment_outlined, text: 'contactUs'.tr, navTo: ContactUsScreen()),
-              MenuButton(icon: Icons.info_outline_rounded, text: 'termsOfUse'.tr, navTo: HomeScreen(), url: 'terms'),
+              MenuButton(icon: Icons.home_outlined,
+                  text: 'home'.tr,
+                  navTo: HomeScreen(),
+                  url: 'home'),
+              MenuButton(icon: Icons.open_in_new,
+                  text: 'deals'.tr,
+                  navTo: DealsScreen()),
+              MenuButton(icon: Icons.favorite_border_outlined,
+                  text: 'favorites'.tr,
+                  navTo: FavoritesScreen()),
+              MenuButton(icon: Icons.volume_down_outlined,
+                  text: 'adWithUs'.tr,
+                  navTo: ShareYourCoupon()),
+              MenuButton(icon: Icons.star_outline_outlined,
+                  text: 'rateUs'.tr,
+                  navTo: HomeScreen(),
+                  url: 'rate'),
+              MenuButton(icon: Icons.photo_camera_outlined,
+                  text: 'instagram'.tr,
+                  navTo: HomeScreen(),
+                  url: 'instagram'),
+              MenuButton(newIcon: 'T',
+                  text: 'twitter'.tr,
+                  navTo: HomeScreen(),
+                  url: 'twitter'),
+              MenuButton(icon: Icons.send_outlined,
+                  text: 'telegram'.tr,
+                  url: 'telegram'),
+              MenuButton(icon: Icons.mode_comment_outlined,
+                  text: 'contactUs'.tr,
+                  navTo: ContactUsScreen()),
+              MenuButton(icon: Icons.info_outline_rounded,
+                  text: 'termsOfUse'.tr,
+                  navTo: HomeScreen(),
+                  url: 'terms'),
 
             ],
           ),
@@ -73,30 +101,40 @@ class MenuButton extends StatelessWidget {
   final Widget navTo;
   final String url;
 
-  const MenuButton({Key key,@required this.text,this.icon, this.newIcon, this.navTo, this.url}) : super(key: key);
+  const MenuButton(
+      {Key key, @required this.text, this.icon, this.newIcon, this.navTo, this.url})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Get.theme.colorScheme.onBackground)
-        )
+          border: Border(
+              bottom: BorderSide(color: Get.theme.colorScheme.onBackground)
+          )
       ),
       child: ListTile(
-        leading: icon != null ? Icon(icon, color: Colors.black) : BuildIcon(value: newIcon),
-        title: Text(text, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+        leading: icon != null ? Icon(icon, color: Colors.black) : BuildIcon(
+            value: newIcon),
+        title: Text(text,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         onTap: () {
           Get.back();
-          if(url != null) {
-            if(url == 'home') {
-            Get.offAll(navTo);
+          if (url != null) {
+            if (url == 'home') {
+              // Navigator.of(context).pushAndRemoveUntil(
+              //     MaterialPageRoute(builder: (context) => navTo,), (route) => false);
+             // log('home');
+             Get.offAll(navTo);
             } else if (url == 'terms') {
               Helpers.launchUrl(url: 'terms');
             } else {
               Helpers.launchUrlSocials(url: url);
             }
           } else {
+            // Navigator.of(context).pushAndRemoveUntil(
+            //     MaterialPageRoute(builder: (context) => navTo,), (route) => false);
+
             Get.to(navTo);
           }
         },
@@ -110,6 +148,7 @@ class BuildIcon extends StatelessWidget {
   final String value;
 
   const BuildIcon({Key key, this.value}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,11 +157,12 @@ class BuildIcon extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.black,
-          width: 1.5
+            color: Colors.black,
+            width: 1.5
         ),
       ),
-      child: Text(value ?? '', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+      child: Text(value ?? '', textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),),
     );
   }
 }

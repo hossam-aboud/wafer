@@ -30,12 +30,12 @@ class AppController extends GetxController {
 
   // Category Filter Selected
 
-  RxInt _selectedCategory = RxInt(0);
+  RxInt selectedCategory = RxInt(0);
 
-  int get selectedCategory => _selectedCategory.value;
+  int get selectedCategoryy => selectedCategory.value;
 
   set setSelectedCategory(int id) {
-    _selectedCategory.value = id;
+    selectedCategory.value = id;
     Get.find<InitDataController>().filterCoupons(categoryId: id);
     update(['categoryListBuilder']);
   }

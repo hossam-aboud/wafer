@@ -9,8 +9,6 @@ class SearchInputWidget extends StatefulWidget {
 }
 
 class _SearchInputWidgetState extends State<SearchInputWidget> {
-
-
   TextEditingController _inputController;
 
   @override
@@ -32,10 +30,8 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
               BoxShadow(
                   color: Colors.grey.withOpacity(0.15),
                   blurRadius: 7,
-                  offset: Offset(0,1)
-              )
-            ]
-        ),
+                  offset: Offset(0, 1))
+            ]),
         child: TextFormField(
           controller: _inputController,
           decoration: InputDecoration(
@@ -48,21 +44,23 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
                 delay: 1.3,
                 child: IconButton(
                   icon: Icon(Icons.search, size: 27.0),
-                  onPressed: () => _doQuery(), // We can use Stateless Widget and remove the controller by passing value inside doQuery but maybe we'll need the function somewhere else
+                  onPressed: () =>
+                      _doQuery(), // We can use Stateless Widget and remove the controller by passing value inside doQuery but maybe we'll need the function somewhere else
                 ),
-              )
-          ),
-          onChanged: (value){
+              )),
+          onChanged: (value) {
             _doQuery();
           },
-          onFieldSubmitted: (v) => _doQuery(),
+          onFieldSubmitted: (v) {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
         ),
       ),
     );
   }
 
   void _doQuery() {
-   // FocusManager.instance.primaryFocus?.unfocus();
+    // FocusManager.instance.primaryFocus?.unfocus();
     Get.find<InitDataController>().filterCoupons(query: _inputController.text);
   }
 }
