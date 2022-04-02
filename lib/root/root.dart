@@ -23,7 +23,7 @@ class Root extends StatelessWidget {
             child: Stack(
               alignment: AlignmentDirectional.topCenter,
               children: [
-                controller.connectionStatus.value == ConnectionStatus.waiting || controller.appLoaded == false ? LoadingDialog() : RootLayout(webLayout: WebScreenRootManage(), mobileLayout: HomeScreen()),
+                controller.connectionStatus.value == ConnectionStatus.waiting || controller.appLoaded == false  ? LoadingDialog() : RootLayout(webLayout: WebScreenRootManage(), mobileLayout: HomeScreen()),
                 controller.connectionStatus.value == ConnectionStatus.none ? Positioned(
                   left: 0,
                   right: 0,

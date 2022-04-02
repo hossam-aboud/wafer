@@ -16,7 +16,7 @@ class InitDataController extends GetxController {
 
   Rx<SettingModel> appSetting = Rx<SettingModel>(null);
   RxList<Coupon> allCoupons = RxList<Coupon>();
-  RxList<Coupon> coupons = RxList<Coupon>();
+  RxList<Coupon> couponsdsdsdsd = RxList<Coupon>();
   RxList<Coupon> pinedCoupons = RxList<Coupon>();
   RxList<Shop> shops = RxList<Shop>();
   RxList<Category> categories = RxList<Category>();
@@ -94,7 +94,7 @@ class InitDataController extends GetxController {
     } else if(isCachedData == false) {
       onlineDataUpdated = true;
     }
-    coupons.value = couponsData;
+    couponsdsdsdsd.value = couponsData;
     allCoupons.value = couponsData;
     pinedCoupons.value = couponsData.where((element) => element.pined == 1).toList();
     // UPDATE STORAGE
@@ -205,7 +205,7 @@ class InitDataController extends GetxController {
       _filteredCoupons.sort((a, b) => a.sortNum?.compareTo(b.sortNum));
     }
 
-    coupons.value = _filteredCoupons;
+    couponsdsdsdsd.value = _filteredCoupons;
   }
 
 }

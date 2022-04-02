@@ -1,4 +1,5 @@
 import 'package:coupons/bindings/binding_controllers.dart';
+import 'package:coupons/components/widgets/loading_dialog.dart';
 import 'package:coupons/root/root.dart';
 import 'package:coupons/services/localization_lang_services.dart';
 import 'package:coupons/themes/themes.dart';

@@ -11,7 +11,7 @@ import 'package:coupons/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoriesFilterList extends StatelessWidget {
+class CategoriesFilterList extends StatefulWidget {
 
   final bool displayButtonFilter;
   final  ScrollController controller;
@@ -19,6 +19,11 @@ class CategoriesFilterList extends StatelessWidget {
 
    CategoriesFilterList({Key key, this.displayButtonFilter = false, @required this.controller, this.currentIndx}) : super(key: key);
 
+  @override
+  State<CategoriesFilterList> createState() => _CategoriesFilterListState();
+}
+
+class _CategoriesFilterListState extends State<CategoriesFilterList> {
   @override
   Widget build(BuildContext context) {
     InitDataController initData = Get.find();
@@ -28,7 +33,7 @@ class CategoriesFilterList extends StatelessWidget {
       builder: (AppController controller) {
         return Row(
           children: [
-            if(displayButtonFilter && !Responsive.isMobile(context))
+            if(widget.displayButtonFilter && !Responsive.isMobile(context))
               FadeAnimation(
                 delay: 0.7,
                 child: IconButton(
@@ -47,15 +52,14 @@ class CategoriesFilterList extends StatelessWidget {
               width: Get.width,
               height: 50.0,
               child: ListView.builder(
-                controller: this.controller,
+                controller: widget.controller,
                 padding: EdgeInsets.only(right: Get.locale.languageCode == 'ar' ? 15.0 : 0, left: Get.locale.languageCode == 'ar' ? 0 : 15.0),
                 scrollDirection: Axis.horizontal,
                 itemCount: initData.categories.length + 1,
                 itemBuilder: (BuildContext context, int index) {
-                  if (currentIndx != null){
-                    controller.selectedCategory = currentIndx as RxInt;
+                  if (widget.currentIndx != null){
+                    controller.selectedCategory = widget.currentIndx;
                   }
-                  log(controller.selectedCategory.toString());
                   if(index == 0) {
                     return _container(text: 'all'.tr, image: null, id: 0, active: 0 == controller.selectedCategoryy);
 
@@ -76,7 +80,6 @@ class CategoriesFilterList extends StatelessWidget {
   }
 
   Widget _container({String text, String image, int id, bool active}) {
-
     return Container(
       margin: EdgeInsets.all(5.0),
       child: ActionChip(

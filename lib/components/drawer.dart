@@ -122,10 +122,7 @@ class MenuButton extends StatelessWidget {
           Get.back();
           if (url != null) {
             if (url == 'home') {
-              // Navigator.of(context).pushAndRemoveUntil(
-              //     MaterialPageRoute(builder: (context) => navTo,), (route) => false);
-             // log('home');
-             Get.offAll(navTo);
+              Get.offAll(() => navTo);
             } else if (url == 'terms') {
               Helpers.launchUrl(url: 'terms');
             } else {
@@ -134,8 +131,8 @@ class MenuButton extends StatelessWidget {
           } else {
             // Navigator.of(context).pushAndRemoveUntil(
             //     MaterialPageRoute(builder: (context) => navTo,), (route) => false);
+            Get.offAll(() => navTo);
 
-            Get.to(navTo);
           }
         },
       ),

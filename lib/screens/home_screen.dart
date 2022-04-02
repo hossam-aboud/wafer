@@ -8,14 +8,16 @@ import 'package:coupons/components/coupons/pined_coupons_slider.dart';
 import 'package:coupons/components/drawer.dart';
 import 'package:coupons/components/home/search_input.dart';
 import 'package:coupons/components/warp_size_zoom.dart';
+import 'package:coupons/controllers/app_controller.dart';
 import 'package:coupons/controllers/init_data_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
-  final RxInt currentIndex ;
+  final RxInt currentIndex;
 
   const HomeScreen({Key key, this.currentIndex}) : super(key: key);
 
@@ -24,15 +26,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   final ScrollController controller = ScrollController();
-  void _onRefreshPage() async{
+
+  void _onRefreshPage() async {
     Get.find<InitDataController>().initFetchData();
     _refreshController.refreshCompleted();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      // add your code here.
+
+      Get.find<AppController>().setSelectedCategory = 0;
+      log('dsds');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: DrawerWidget(),
           appBar: AppBar(
             backgroundColor: Get.theme.scaffoldBackgroundColor,
-
             title: FadeAnimation(
               delay: 0.5,
               child: Container(
@@ -81,32 +92,28 @@ class _HomeScreenState extends State<HomeScreen> {
               complete: Text(""),
               failed: Text(""),
             ),
-            footer: CustomFooter( // all those things are not disabled yet, set enablePullUp to 'true' to it
-              builder: (BuildContext context,LoadStatus mode){
-                Widget body ;
-                if(mode==LoadStatus.idle){
-                  body =  Text("pullDownLoadMore".tr);
-                }
-                else if(mode==LoadStatus.loading){
-                  body =  CupertinoActivityIndicator();
-                }
-                else if(mode == LoadStatus.failed){
+            footer: CustomFooter(
+              // all those things are not disabled yet, set enablePullUp to 'true' to it
+              builder: (BuildContext context, LoadStatus mode) {
+                Widget body;
+                if (mode == LoadStatus.idle) {
+                  body = Text("pullDownLoadMore".tr);
+                } else if (mode == LoadStatus.loading) {
+                  body = CupertinoActivityIndicator();
+                } else if (mode == LoadStatus.failed) {
                   body = Text("pullDownFiled".tr);
-                }
-                else if(mode == LoadStatus.canLoading){
+                } else if (mode == LoadStatus.canLoading) {
                   body = Text("loadMore".tr);
-                }
-                else{
+                } else {
                   body = Text("allRecords".tr);
                 }
                 return Container(
                   height: 55.0,
-                  child: Center(child:body),
+                  child: Center(child: body),
                 );
               },
             ),
             onRefresh: () => _onRefreshPage(),
-
             controller: _refreshController,
             child: SingleChildScrollView(
               child: Column(
@@ -118,18 +125,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     delay: 1,
                     child: SearchInputWidget(),
                   ),
-
-
                   FadeAnimation(
                     delay: 1.5,
-                    child: CategoriesFilterList(controller: controller, currentIndx: widget.currentIndex,),
+                    child: CategoriesFilterList(
+                      controller: controller,
+                      currentIndx: widget.currentIndex,
+                    ),
                   ),
-
                   FadeAnimation(
                     delay: 1.3,
                     child: PinedCouponsSlider(),
                   ),
-
                   FadeAnimation(
                     delay: 1.5,
                     child: Container(
@@ -148,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 DateTime currentBackPressTime;
 
 Future<bool> onWillPop(BuildContext context) async {
@@ -156,7 +163,12 @@ Future<bool> onWillPop(BuildContext context) async {
   if (currentBackPressTime == null ||
       now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
     currentBackPressTime = now;
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen(currentIndex: RxInt(0),)), (route) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(
+                  currentIndex: RxInt(0),
+                )),
+        (route) => false);
     return Future.value(false);
   }
 
